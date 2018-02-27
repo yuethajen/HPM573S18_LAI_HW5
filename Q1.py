@@ -13,6 +13,7 @@ class Game:
         self.head_prop = head_prop
         self.random = np.random
         self.random.seed(id)
+        self.loss = 0
 
     def simulate(self):
         toss_result=[]
@@ -51,6 +52,19 @@ class Game:
 
         return self.plot_reward
 
+    def prop(self):
+
+        for k in range (0, self.repeat_time):
+            L = Game(self.id, self.repeat_time, self.head_prop)
+            m = L.simulate()
+            if m <= 0:
+                self.loss += 1
+            self.id += 1
+
+        self.loss = self.loss/self.repeat_time
+
+        return self.loss
+
 
 Q = Game(1, 1000, 0.5)
 obs = Q.plot()
@@ -60,7 +74,7 @@ min_reward = min(obs)
 print('The expected reward:', Q.repeat())
 print('The minimum reward: ', min_reward)
 print('The maximum reward: ', max_reward)
-
+print('The probability of losing money: ', Q.prop())
 
 obs = Q.plot()
 
