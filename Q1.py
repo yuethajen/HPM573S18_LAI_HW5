@@ -16,7 +16,9 @@ class Game:
         self.loss = 0
 
     def simulate(self):
+        
         toss_result=[]
+        
         for i in range (0,20):
             if self.random.sample() < self.head_prop:
                 toss_result.append('Head')
